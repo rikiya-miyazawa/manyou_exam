@@ -1,24 +1,26 @@
-# README
+## User
+```
+name:string
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+email:string
 
-Things you may want to cover:
+password_digest:string
+```
 
-* Ruby version
+## Task
+```
+title:string
 
-* System dependencies
+content:text
 
-* Configuration
+limit:string
 
-* Database creation
+status:string
+```
 
-* Database initialization
+## Lavel
+```
+user:references
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+task:references
+```
