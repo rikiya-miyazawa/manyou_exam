@@ -1,6 +1,6 @@
-| User | Label | Task |
-| :---: | :---: | :---: |
-| name | task_id | title |
-|email | user_id | content |
-|password |      | Limit |
-|      |         | status |
+| User            | Label              | Task          |
+| :---:           | :---:              | :---:         |
+| name:string     | task_id:references | title:string  |
+| email:string    | user_id:references | content:text  |
+| password:string |                    | Limit:string  |
+|                 |                    | status:string |
