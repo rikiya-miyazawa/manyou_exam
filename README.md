@@ -1,26 +1,6 @@
-## User
-```
-name:string
-
-email:string
-
-password_digest:string
-```
-
-## Task
-```
-title:string
-
-content:text
-
-limit:string
-
-status:string
-```
-
-## Lavel
-```
-user:references
-
-task:references
-```
+| User | Label | Task |
+| :---: | :---: | :---: |
+| name | task_id | title |
+|email | user_id | content |
+|password |      | Limit |
+|      |         | status |
