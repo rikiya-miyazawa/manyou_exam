@@ -1,5 +1,16 @@
 ---
 ja:
+  view:
+    error_count: '件のエラーがあります'
+    task_list: 'タスク一覧'
+    title: 'タイトル'
+    content: '内容'
+    detail: '詳細'
+    edit: '編集'
+    delete: '削除'
+    new_task: 'タスク追加'
+    confirm:
+      delete: '本当に削除しますか？'
   activerecord:
     errors:
       messages:
