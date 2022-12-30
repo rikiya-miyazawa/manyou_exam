@@ -21,7 +21,7 @@ gem 'net-pop'
 1. `git add` <br>
    `git commit` 
 2. `heroku creata`
-3. `gem bundle install`
+3. `bundle install`
 4. `heroku buildpacks:set heroku/ruby` <br>
    `heroku buildpacks:add --index 1 heroku/nodejs`
 5. `git push heroku branch:master`
