@@ -24,6 +24,11 @@
     <br>
     <%= form.date_select :end_date %>
   </div>
+  <div class="task_start_status">
+    <%= form.label :start_status %>
+    <br>
+    <%= form.select :start_status, Task.start_statuses.keys%>
+  </div>
   <br>
   <%= form.submit %>
   <br>

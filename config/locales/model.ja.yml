@@ -7,3 +7,4 @@ ja:
         title: タイトル
         content: 内容
         end_date: '終了期限'
+        start_status: 'ステータス'
