@@ -18,4 +18,8 @@
   </tr>
 <% end %>
 </table>
+<br>
 <%= link_to t('view.new_task'), new_task_path %>
+<br>
+<%= link_to '終了期限で並び替え', tasks_path(sort_end_date: "true") %> | 
+<%= link_to '元に戻す', tasks_path %>
