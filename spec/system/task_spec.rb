@@ -6,6 +6,9 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit new_task_path
         fill_in 'task[title]', with: 'new_test_title'
         fill_in 'task[content]', with: 'new_test_content'
+        select '2023', from: 'task[end_date(1i)]'
+        select '1月', from: 'task[end_date(2i)]'
+        select '10', from: 'task[end_date(3i)]'
         click_button 
         expect(page).to have_content 'タスクを追加しました'
       end
@@ -36,6 +39,21 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(task_list[1]).to have_content 'task3'
         expect(task_list[2]).to have_content 'task2'
         expect(task_list[3]).to have_content 'task1'
+      end
+    end
+    context '「終了期限で並び替え」ボタンがクリックされた場合' do
+      it '終了期限が一番未来のタスクが一番上に表示される' do
+        task = FactoryBot.create(:task, end_date: Date.new(2023, 1, 5))
+        task = FactoryBot.create(:task, end_date: Date.new(2023, 1, 6))
+        task = FactoryBot.create(:task, end_date: Date.new(2023, 1, 7))
+        task = FactoryBot.create(:task, end_date: Date.new(2023, 1, 8))
+        visit tasks_path
+        visit tasks_path(sort_end_date: "true")
+        task_list = page.all('.task_row')
+        expect(task_list[0]).to have_content '2023-01-08'
+        expect(task_list[1]).to have_content '2023-01-07'
+        expect(task_list[2]).to have_content '2023-01-06'
+        expect(task_list[3]).to have_content '2023-01-05'
       end
     end
   end
