@@ -5,11 +5,13 @@
   <tr>
     <th><%= t('view.title') %></th>
     <th><%= t('view.content') %></th>
+    <th><%= t('view.end_date') %></th>
   </tr>
     <% @tasks.each do |task| %>
   <tr class="task_row">
     <td><%= task.title %></td>
     <td><%= task.content %></td>
+    <td><%= task.end_date %></td>
     <td><%= link_to t('view.detail'), task_path(task.id) %></td>
     <td><%= link_to t('view.edit'), edit_task_path(task.id) %></td>
     <td><%= link_to t('view.delete'), task_path(task.id), method: :delete, data: { confirm: t('view.confirm.delete') } %></td>

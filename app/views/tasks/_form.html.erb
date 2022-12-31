@@ -19,7 +19,14 @@
     <%= form.label :content %>
     <br>
     <%= form.text_area :content %>
+  <div class="task_end_date">
+    <%= form.label :end_date %>
+    <br>
+    <%= form.date_select :end_date %>
   </div>
+  <br>
   <%= form.submit %>
+  <br>
 <% end %>
+<br>
 <%= link_to t('view.task_list'), tasks_path %>

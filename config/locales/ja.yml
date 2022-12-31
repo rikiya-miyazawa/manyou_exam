@@ -9,6 +9,7 @@ ja:
     edit: '編集'
     delete: '削除'
     new_task: 'タスク追加'
+    end_date: '終了期限'
     confirm:
       delete: '本当に削除しますか？'
   activerecord:
