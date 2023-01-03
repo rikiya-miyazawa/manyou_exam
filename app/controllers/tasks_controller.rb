@@ -5,14 +5,13 @@ class TasksController < ApplicationController
     if params[:sort_end_date].present?
       @tasks = Task.sort_end_date
     elsif params[:task].present?
-      if params[:task].present? && params[:task][:start_status].present?
-        @tasks = Task.where('title LIKE ?', "%#{params[:task][:title]}%")
-                    .where(start_status: params[:task][:start_status]) 
-      elsif params[:task].present? 
-        @tasks = Task.where('title LIKE ?', "%#{params[:task][:title]}%")
-      elsif params[:start_status].present?
-        @tasks = Task.where(start_status: params[:task][:start_status])
-      end
+        if params[:task].present? && params[:task][:start_status].present?
+          @tasks = Task.title_search(params[:task][:title]).status_search(params[:task][:start_status])
+        elsif params[:task].present? 
+          @tasks = Task.title_search(params[:task][:title])
+        elsif params[:task][:start_status].present?
+          @tasks = Task.status_search(status)
+        end
     else
       @tasks = Task.latest
     end
