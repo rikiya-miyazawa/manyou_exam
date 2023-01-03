@@ -1,3 +1,9 @@
+<%= form_with url: tasks_path, method: :get, scope: :task, local: true do |form| %>
+  <%= form.text_field :title %>
+  <%= form.select :start_status, Task.start_statuses.keys%>
+  <%= form.submit t('view.search'), name: nil %>
+<% end %>
+
 <h1><%= t('view.task_list') %></h1>
 <p style="color: #a4a8d4"><%= notice %></p>
 
@@ -32,5 +38,6 @@
 <br>
 <%= link_to t('view.new_task'), new_task_path %>
 <br>
-<%= link_to '終了期限で並び替え', tasks_path(sort_end_date: "true") %> | 
-<%= link_to '元に戻す', tasks_path %>
+<%= link_to t('view.task_list'), tasks_path %>
+<br>
+<%= link_to t('view.end_date_sort'), tasks_path(sort_end_date: "true") %> 

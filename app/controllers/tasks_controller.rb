@@ -2,8 +2,17 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i(show edit update destroy)
   def index
     @tasks = Task.all
-    if params[:sort_end_date]
+    if params[:sort_end_date].present?
       @tasks = Task.latest
+    elsif params[:task].present?
+      if params[:task][:title].present? && params[:task][:start_status].present?
+      @tasks = Task.where('title LIKE ?', "%#{params[:task][:title]}%")
+                  .where(start_status: params[:task][:start_status])
+      elsif params[:task][:title].present?
+      @tasks = Task.where('title LIKE ?', "%#{params[:task][:title]}%")
+      elsif params[:task][:start_status]
+      @tasks = Task.where(start_status: params[:task][:start_status])
+      end
     else
       @tasks = Task.order(created_at: "DESC")
     end
