@@ -6,7 +6,8 @@ class TasksController < ApplicationController
       @tasks = Task.sort_end_date
     elsif params[:task].present?
         if params[:task].present? && params[:task][:start_status].present?
-          @tasks = Task.title_search(params[:task][:title]).status_search(params[:task][:start_status])
+          @tasks = Task.title_search(params[:task][:title])
+                        .status_search(params[:task][:start_status])
         elsif params[:task].present? 
           @tasks = Task.title_search(params[:task][:title])
         elsif params[:task][:start_status].present?
