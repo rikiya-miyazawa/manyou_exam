@@ -9,8 +9,10 @@ RSpec.describe 'タスク管理機能', type: :system do
         select '2023', from: 'task[end_date(1i)]'
         select '1月', from: 'task[end_date(2i)]'
         select '10', from: 'task[end_date(3i)]'
+        select '完了', from: 'task[start_status]'
         click_button 
         expect(page).to have_content 'タスクを追加しました'
+        expect(page).to have_content '完了'
       end
     end
   end
@@ -64,6 +66,46 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit tasks_path
         click_link "詳細"
         expect(page).to have_content "show_test"
+      end
+    end
+  end
+  describe '検索機能' do
+    context 'タイトルで検索した場合' do
+      it 'タイトルが部分一致したタスクが表示される' do
+        task = FactoryBot.create(:task, title: 'task1')
+        task = FactoryBot.create(:task, title: 'task1')
+        task = FactoryBot.create(:task, title: 'task3')
+        task = FactoryBot.create(:task, title: 'task3')
+        task = FactoryBot.create(:task, title: 'task4')
+        visit tasks_path
+        fill_in 'task[title]', with: '1'
+        click_button "検索"
+        expect(page).to have_content "task1"
+      end
+    end
+    context 'ステータスで検索した場合' do
+      it 'ステータスと完全一致したタスクが表示される' do
+        task = FactoryBot.create(:task, start_status: 2)
+        task = FactoryBot.create(:task, start_status: 0)
+        task = FactoryBot.create(:task, start_status: 1)
+        visit tasks_path
+        select '完了', from: 'task[start_status]'
+        click_button "検索"
+        expect(page).to have_content "完了"
+      end
+    end
+    context 'タイトルとステータス両方で検索した場合' do
+      it '両方をand検索して一致したタスクが表示される' do
+        task = FactoryBot.create(:task, title: 'andtest1', start_status: 2)
+        task = FactoryBot.create(:task, title: 'andtest1', start_status: 2)
+        task = FactoryBot.create(:task, title: 'andtest1', start_status: 1)
+        task = FactoryBot.create(:task, title: 'andtest2', start_status: 0)
+        visit tasks_path
+        fill_in 'task[title]', with: 'test1'
+        select '完了', from: 'task[start_status]'
+        click_button "検索"
+        expect(page).to have_content "andtest1"
+        expect(page).to have_content "完了"
       end
     end
   end
