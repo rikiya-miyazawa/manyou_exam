@@ -16,7 +16,7 @@
     <th><%= t('view.priority') %>&emsp;</th>
     
   </tr>
-    <% @tasks.each do |task| %>
+  <% @tasks.each do |task| %>
   <tr class="task_row">
     <td><%= task.title %>&emsp;</td>
     <td><%= task.content %>&emsp;</td>
@@ -43,7 +43,7 @@
     <td><%= link_to t('view.edit'), edit_task_path(task.id) %></td>
     <td><%= link_to t('view.delete'), task_path(task.id), method: :delete, data: { confirm: t('view.confirm.delete') } %></td>
   </tr>
-<% end %>
+  <% end %>
 </table>
 <br>
 <%= link_to t('view.new_task'), new_task_path %>
@@ -52,3 +52,4 @@
 <br>
 <%= link_to t('view.end_date_sort'), tasks_path(sort_end_date: "true") %> | 
 <%= link_to t('view.priority_sort'), tasks_path(sort_priority: "true") %> 
+<%= paginate @tasks %>

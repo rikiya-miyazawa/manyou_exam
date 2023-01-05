@@ -3,20 +3,21 @@ class TasksController < ApplicationController
   def index
     @tasks = Task.all
     if params[:sort_end_date].present?
-      @tasks = Task.sort_end_date
+      @tasks = Task.sort_end_date.page(params[:page]).per(5)
     elsif params[:sort_priority].present?
-      @tasks = Task.sort_priority
+      @tasks = Task.sort_priority.page(params[:page]).per(5)
     elsif params[:task].present?
         if params[:task].present? && params[:task][:start_status].present?
           @tasks = Task.title_search(params[:task][:title])
                         .status_search(params[:task][:start_status])
+                        .page(params[:page]).per(2)
         elsif params[:task].present? 
-          @tasks = Task.title_search(params[:task][:title])
+          @tasks = Task.title_search(params[:task][:title]).page(params[:page]).per(2)
         elsif params[:task][:start_status].present?
-          @tasks = Task.status_search(status)
+          @tasks = Task.status_search(status).page(params[:page]).per(2)
         end
     else
-      @tasks = Task.latest
+      @tasks = Task.latest.page(params[:page]).per(5)
     end
   end
 
@@ -53,7 +54,7 @@ class TasksController < ApplicationController
   end
 
   private
-
+  
   def set_task
     @task = Task.find(params[:id])
   end
