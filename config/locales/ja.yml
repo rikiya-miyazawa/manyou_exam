@@ -11,7 +11,9 @@ ja:
     new_task: 'タスク追加'
     end_date: '終了期限'
     start_status: 'ステータス'
+    priority: '優先度'
     end_date_sort: '終了期限で並び替え'
+    priority_sort: '優先度で並び替え'
     undo: '元に戻す'
     search: '検索'
     confirm:
@@ -19,7 +21,7 @@ ja:
   enums:
     task:
       start_status:
-        yet: '未着手'
+        not_yet: '未着手'
         start: '着手'
         complete: '完了'
   activerecord:

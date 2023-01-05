@@ -4,6 +4,8 @@ class TasksController < ApplicationController
     @tasks = Task.all
     if params[:sort_end_date].present?
       @tasks = Task.sort_end_date
+    elsif params[:sort_priority].present?
+      @tasks = Task.sort_priority
     elsif params[:task].present?
         if params[:task].present? && params[:task][:start_status].present?
           @tasks = Task.title_search(params[:task][:title])
@@ -57,6 +59,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :content, :end_date, :start_status)
+    params.require(:task).permit(:title, :content, :end_date, :start_status, :priority)
   end
 end
