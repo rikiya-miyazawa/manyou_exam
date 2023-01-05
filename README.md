@@ -1,11 +1,11 @@
 ## table schema
-| User            | Label              | Task          |
-| :---:           | :---:              | :---:         |
-| name:string     | task_id:references | title:string  |
-| email:string    | user_id:references | content:text  |
-| password:string |                    | Limit:string  |
-|                 |                    | status:string |
-
+| User            | Label              | Task                 |
+| :---:           | :---:              | :---:                |
+| name:string     | task_id:references | title:string         |
+| email:string    | user_id:references | content:text         |
+| password:string |                    | end_date:date        |
+|                 |                    | start_status:integer |
+|                 |                    | priority:integer     |
 <HR>
 
 ## Heroku deploy flow

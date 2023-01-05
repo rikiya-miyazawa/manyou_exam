@@ -6,8 +6,13 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit new_task_path
         fill_in 'task[title]', with: 'new_test_title'
         fill_in 'task[content]', with: 'new_test_content'
+        select '2023', from: 'task[end_date(1i)]'
+        select '1月', from: 'task[end_date(2i)]'
+        select '10', from: 'task[end_date(3i)]'
+        select '完了', from: 'task[start_status]'
         click_button 
         expect(page).to have_content 'タスクを追加しました'
+        expect(page).to have_content '完了'
       end
     end
   end
@@ -38,6 +43,36 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(task_list[3]).to have_content 'task1'
       end
     end
+    context '「終了期限で並び替え」ボタンがクリックされた場合' do
+      it '終了期限が一番未来のタスクが一番上に表示される' do
+        task = FactoryBot.create(:task, end_date: Date.new(2023, 1, 5))
+        task = FactoryBot.create(:task, end_date: Date.new(2023, 1, 6))
+        task = FactoryBot.create(:task, end_date: Date.new(2023, 1, 7))
+        task = FactoryBot.create(:task, end_date: Date.new(2023, 1, 8))
+        visit tasks_path
+        visit tasks_path(sort_end_date: "true")
+        task_list = page.all('.task_row')
+        expect(task_list[0]).to have_content '2023-01-08'
+        expect(task_list[1]).to have_content '2023-01-07'
+        expect(task_list[2]).to have_content '2023-01-06'
+        expect(task_list[3]).to have_content '2023-01-05'
+      end
+    end
+    context '「優先度で並び替え」ボタンがクリックされた場合' do
+      it '優先度が高いタスクが一番上に表示される' do
+        task = FactoryBot.create(:task, priority: 0)
+        task = FactoryBot.create(:task, priority: 2)
+        task = FactoryBot.create(:task, priority: 1)
+        task = FactoryBot.create(:task, priority: 2)
+        visit tasks_path
+        visit tasks_path(sort_priority: "true")
+        task_list = page.all('.task_row')
+        expect(task_list[0]).to have_content '高'
+        expect(task_list[1]).to have_content '高'
+        expect(task_list[2]).to have_content '中'
+        expect(task_list[3]).to have_content '低'
+      end
+    end
   end
   describe '詳細表示機能' do
     context '任意のタスク詳細画面に遷移した場合' do
@@ -46,6 +81,46 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit tasks_path
         click_link "詳細"
         expect(page).to have_content "show_test"
+      end
+    end
+  end
+  describe '検索機能' do
+    context 'タイトルで検索した場合' do
+      it 'タイトルが部分一致したタスクが表示される' do
+        task = FactoryBot.create(:task, title: 'task1')
+        task = FactoryBot.create(:task, title: 'task1')
+        task = FactoryBot.create(:task, title: 'task3')
+        task = FactoryBot.create(:task, title: 'task3')
+        task = FactoryBot.create(:task, title: 'task4')
+        visit tasks_path
+        fill_in 'task[title]', with: '1'
+        click_button "検索"
+        expect(page).to have_content "task1"
+      end
+    end
+    context 'ステータスで検索した場合' do
+      it 'ステータスと完全一致したタスクが表示される' do
+        task = FactoryBot.create(:task, start_status: 2)
+        task = FactoryBot.create(:task, start_status: 0)
+        task = FactoryBot.create(:task, start_status: 1)
+        visit tasks_path
+        select '完了', from: 'task[start_status]'
+        click_button "検索"
+        expect(page).to have_content "完了"
+      end
+    end
+    context 'タイトルとステータス両方で検索した場合' do
+      it '両方をand検索して一致したタスクが表示される' do
+        task = FactoryBot.create(:task, title: 'andtest1', start_status: 2)
+        task = FactoryBot.create(:task, title: 'andtest1', start_status: 2)
+        task = FactoryBot.create(:task, title: 'andtest1', start_status: 1)
+        task = FactoryBot.create(:task, title: 'andtest2', start_status: 0)
+        visit tasks_path
+        fill_in 'task[title]', with: 'test1'
+        select '完了', from: 'task[start_status]'
+        click_button "検索"
+        expect(page).to have_content "andtest1"
+        expect(page).to have_content "完了"
       end
     end
   end

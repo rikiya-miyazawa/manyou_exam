@@ -1,19 +1,60 @@
+<%= form_with url: tasks_path, method: :get, scope: :task, local: true do |form| %>
+    <%= form.text_field :title %>
+    <%= form.select :start_status, Task.start_statuses.keys, include_blank: "ステータス選択"%>
+    <%= form.submit t('view.search'), name: nil %>
+<% end %>
+
 <h1><%= t('view.task_list') %></h1>
 <p style="color: #a4a8d4"><%= notice %></p>
 
-<table>
+<table class="table">
   <tr>
     <th><%= t('view.title') %></th>
     <th><%= t('view.content') %></th>
+    <th><%= t('view.end_date') %></th>
+    <th><%= t('view.start_status') %>&emsp;</th>
+    <th><%= t('view.priority') %>&emsp;</th>
+    
   </tr>
-    <% @tasks.each do |task| %>
+  <% @tasks.each do |task| %>
   <tr class="task_row">
-    <td><%= task.title %></td>
-    <td><%= task.content %></td>
+    <td><%= task.title %>&emsp;</td>
+    <td><%= task.content %>&emsp;</td>
+    <td><%= task.end_date %>&emsp;</td>
+    <td>
+      <% if task.start_status == '未着手' %>
+        <%= task.start_status %>
+      <% elsif task.start_status == '着手' %>
+        <%= task.start_status %>
+      <% else %>
+        <%= task.start_status %>
+      <% end %>
+    </td>
+    <td>
+      <% if task.priority == '低' %>
+        <%= task.priority %>
+      <% elsif task.priority == '中' %>
+        <%= task.priority %>
+      <% else %>
+        <%= task.priority %>
+      <% end %>
+    </td>
     <td><%= link_to t('view.detail'), task_path(task.id) %></td>
     <td><%= link_to t('view.edit'), edit_task_path(task.id) %></td>
     <td><%= link_to t('view.delete'), task_path(task.id), method: :delete, data: { confirm: t('view.confirm.delete') } %></td>
   </tr>
-<% end %>
+  <% end %>
 </table>
-<%= link_to t('view.new_task'), new_task_path %>
+<br>
+<button type="button" class="btn btn-outline-info">
+  <%= link_to t('view.new_task'), new_task_path %>
+</button>
+<button type="button" class="btn btn-outline-info">
+  <%= link_to t('view.task_list'), tasks_path %>
+</button>
+<br>
+<button type="button" class="btn btn-outline-success">
+  <%= link_to t('view.end_date_sort'), tasks_path(sort_end_date: "true") %> | 
+  <%= link_to t('view.priority_sort'), tasks_path(sort_priority: "true") %> 
+</button>
+<%= paginate @tasks %>
