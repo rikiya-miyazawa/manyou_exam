@@ -1,13 +1,13 @@
 <%= form_with url: tasks_path, method: :get, scope: :task, local: true do |form| %>
-  <%= form.text_field :title %>
-  <%= form.select :start_status, Task.start_statuses.keys, include_blank: "ステータス選択"%>
-  <%= form.submit t('view.search'), name: nil %>
+    <%= form.text_field :title %>
+    <%= form.select :start_status, Task.start_statuses.keys, include_blank: "ステータス選択"%>
+    <%= form.submit t('view.search'), name: nil %>
 <% end %>
 
 <h1><%= t('view.task_list') %></h1>
 <p style="color: #a4a8d4"><%= notice %></p>
 
-<table>
+<table class="table">
   <tr>
     <th><%= t('view.title') %></th>
     <th><%= t('view.content') %></th>
@@ -46,10 +46,15 @@
   <% end %>
 </table>
 <br>
-<%= link_to t('view.new_task'), new_task_path %>
+<button type="button" class="btn btn-outline-info">
+  <%= link_to t('view.new_task'), new_task_path %>
+</button>
+<button type="button" class="btn btn-outline-info">
+  <%= link_to t('view.task_list'), tasks_path %>
+</button>
 <br>
-<%= link_to t('view.task_list'), tasks_path %>
-<br>
-<%= link_to t('view.end_date_sort'), tasks_path(sort_end_date: "true") %> | 
-<%= link_to t('view.priority_sort'), tasks_path(sort_priority: "true") %> 
+<button type="button" class="btn btn-outline-success">
+  <%= link_to t('view.end_date_sort'), tasks_path(sort_end_date: "true") %> | 
+  <%= link_to t('view.priority_sort'), tasks_path(sort_priority: "true") %> 
+</button>
 <%= paginate @tasks %>
