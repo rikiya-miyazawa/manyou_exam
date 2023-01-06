@@ -1,1 +1,1 @@
-User.create!(name: 'seeduser1', email: 'seeduser1@example.com', password_digest: '111111')
+User.create!(name: 'seeduser1', email: 'seeduser1@example.com', password: '111111', password_confirmation: '111111')

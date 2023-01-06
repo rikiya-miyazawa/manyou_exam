@@ -1,23 +1,23 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i(show edit update destroy)
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks
     if params[:sort_end_date].present?
-      @tasks = Task.sort_end_date.page(params[:page]).per(5)
+      @tasks = current_user.tasks.sort_end_date.page(params[:page]).per(5)
     elsif params[:sort_priority].present?
-      @tasks = Task.sort_priority.page(params[:page]).per(5)
+      @tasks = current_user.tasks.sort_priority.page(params[:page]).per(5)
     elsif params[:task].present?
         if params[:task].present? && params[:task][:start_status].present?
-          @tasks = Task.title_search(params[:task][:title])
+          @tasks = current_user.tasks.title_search(params[:task][:title])
                         .status_search(params[:task][:start_status])
                         .page(params[:page]).per(2)
         elsif params[:task].present? 
-          @tasks = Task.title_search(params[:task][:title]).page(params[:page]).per(2)
+          @tasks = current_user.tasks.title_search(params[:task][:title]).page(params[:page]).per(2)
         elsif params[:task][:start_status].present?
-          @tasks = Task.status_search(status).page(params[:page]).per(2)
+          @tasks = current_user.tasks.status_search(status).page(params[:page]).per(2)
         end
     else
-      @tasks = Task.latest.page(params[:page]).per(5)
+      @tasks = current_user.tasks.latest.page(params[:page]).per(5)
     end
   end
 
@@ -29,7 +29,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.create(task_params)
+    @task = current_user.tasks.build(task_params)
     if @task.save
       redirect_to tasks_path, notice: 'タスクを追加しました'
     else
