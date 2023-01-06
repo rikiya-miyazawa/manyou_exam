@@ -3,6 +3,7 @@ class Task < ApplicationRecord
             length: { maximum: 100 }
   validates :content, presence: true,
             length: { maximum: 1000 }
+  belongs_to :user
   scope :sort_end_date, -> {order(end_date: :desc)}
   scope :sort_priority, -> {order(priority: :desc)}
   scope :latest, -> {order(created_at: :desc)}
