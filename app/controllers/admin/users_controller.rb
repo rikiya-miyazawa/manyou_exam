@@ -1,5 +1,5 @@
 class Admin::UsersController < ApplicationController
-  before_action :set_user, only: %i(edit update destroy)
+  before_action :set_user, only: %i(edit update show destroy)
   def index 
     @users = User.all
   end
@@ -15,6 +15,9 @@ class Admin::UsersController < ApplicationController
     else
       render :new
     end
+  end
+
+  def show
   end
 
   def edit

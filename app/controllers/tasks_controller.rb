@@ -22,6 +22,7 @@ class TasksController < ApplicationController
   end
 
   def show
+    @tasks = current_user.tasks
   end
   
   def new
