@@ -17,6 +17,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @tasks = current_user.tasks
     if @user == current_user
       @user
     else
