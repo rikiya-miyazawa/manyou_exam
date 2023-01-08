@@ -3,6 +3,12 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
+        visit new_user_path
+        fill_in 'user[name]', with: 'new_user_name'
+        fill_in 'user[email]', with: 'new_user_name@example.com'
+        fill_in 'user[password]', with: '111111'
+        fill_in 'user[password_confirmation]', with: '111111'
+        click_button
         visit new_task_path
         fill_in 'task[title]', with: 'new_test_title'
         fill_in 'task[content]', with: 'new_test_content'
@@ -10,7 +16,8 @@ RSpec.describe 'タスク管理機能', type: :system do
         select '1月', from: 'task[end_date(2i)]'
         select '10', from: 'task[end_date(3i)]'
         select '完了', from: 'task[start_status]'
-        click_button 
+        select '中', from: 'task[priority]'
+        click_button '登録する'
         expect(page).to have_content 'タスクを追加しました'
         expect(page).to have_content '完了'
       end
@@ -20,7 +27,9 @@ RSpec.describe 'タスク管理機能', type: :system do
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
         # テストで使用するためのタスクを作成
+        user = FactoryBot.create(:user)
         task = FactoryBot.create(:task, title: 'task')
+        user_task = FactoryBot.create(:task, user: user)
         # タスク一覧ページに遷移
         visit tasks_path
         # visitした（遷移した）page（タスク一覧ページ）に「task」という文字列が

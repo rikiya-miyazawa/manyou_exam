@@ -11,7 +11,7 @@ class Admin::UsersController < ApplicationController
   def create 
     @user = User.new(user_params)
     if @user.save
-      redirect_to admin_users_path
+      redirect_to admin_users_path, notice: 'ユーザを作成'
     else
       render :new
     end
@@ -25,7 +25,7 @@ class Admin::UsersController < ApplicationController
 
   def update 
     if @user.update(user_params)
-      redirect_to admin_users_path
+      redirect_to admin_users_path, notice: 'ユーザを更新'
     else
       render :edit
     end
@@ -33,7 +33,7 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     @user.destroy
-    redirect_to admin_users_path
+    redirect_to admin_users_path, notice: 'ユーザを削除'
   end
 
   private
