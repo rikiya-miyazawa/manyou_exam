@@ -19,6 +19,14 @@ class TasksController < ApplicationController
     else
       @tasks = current_user.tasks.latest.page(params[:page]).per(5)
     end
+
+    if params[:admin_user].present?
+      if admin?
+        redirect_to admin_users_path
+      else
+        redirect_to tasks_path, notice: '管理者のみアクセスできます'
+      end
+    end
   end
 
   def show

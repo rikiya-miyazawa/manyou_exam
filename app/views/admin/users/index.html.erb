@@ -1,4 +1,5 @@
 <h5>管理者画面</h5>
+<p style="color: #a4a8d4"><%= notice %></p>
 
 <h3>ユーザ一覧</h3>
 
@@ -17,3 +18,6 @@
   </tr>
 <% end %>
 </table>
+<button type="button" class="btn btn-outline-info">
+<%= link_to '管理者ユーザ作成', new_admin_user_path %>
+</button>

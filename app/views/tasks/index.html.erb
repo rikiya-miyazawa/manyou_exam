@@ -3,7 +3,13 @@
     <%= form.select :start_status, Task.start_statuses.keys, include_blank: "ステータス選択"%>
     <%= form.submit t('view.search'), name: nil %>
 <% end %>
-
+<br>
+<button type="button" class="btn btn-outline-success">
+  <%= link_to t('view.end_date_sort'), tasks_path(sort_end_date: "true") %> | 
+  <%= link_to t('view.priority_sort'), tasks_path(sort_priority: "true") %> 
+</button>
+<br>
+<br>
 <h1><%= t('view.task_list') %></h1>
 <p style="color: #a4a8d4"><%= notice %></p>
 
@@ -51,12 +57,12 @@
 <button type="button" class="btn btn-outline-info">
   <%= link_to t('view.new_task'), new_task_path %>
 </button>
+<br>
 <button type="button" class="btn btn-outline-info">
   <%= link_to t('view.task_list'), tasks_path %>
 </button>
 <br>
-<button type="button" class="btn btn-outline-success">
-  <%= link_to t('view.end_date_sort'), tasks_path(sort_end_date: "true") %> | 
-  <%= link_to t('view.priority_sort'), tasks_path(sort_priority: "true") %> 
+<button type="button" class="btn btn-outline-info">
+  <%= link_to '管理者画面', tasks_path(admin_user: "true") %> 
 </button>
 <%= paginate @tasks %>
