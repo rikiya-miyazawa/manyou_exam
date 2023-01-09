@@ -1,0 +1,37 @@
+<h5>管理者画面</h5>
+<br>
+<h3>ユーザ情報更新</h3>
+
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this <%= @user.name %> from being saved:</h2>
+    <ul>
+    <% @user.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with(model: @user, url: admin_user_path, local: true) do |f| %>  
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.label :email %>
+  <%= f.email_field :email %>
+
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+
+  <%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation %>
+
+  <%= f.label :admin %>
+  <%= f.check_box :admin, {} , true, false %>
+
+  <%= f.label :notadmin %>
+  <%= f.check_box :admin, {} , false, true %>
+
+  <%= f.submit "update user" %>
+<% end %>
+<%= link_to 'ユーザ一覧', admin_users_path %>

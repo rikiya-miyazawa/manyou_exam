@@ -1,17 +1,8 @@
-<%= form_with url: tasks_path, method: :get, scope: :task, local: true do |form| %>
-    <%= form.text_field :title %>
-    <%= form.select :start_status, Task.start_statuses.keys, include_blank: "ステータス選択"%>
-    <%= form.submit t('view.search'), name: nil %>
-<% end %>
+<h1><%= @user.name %>のページ</h1>
+
+<p>メールアドレス: <%= @user.email %></p>
 <br>
-<button type="button" class="btn btn-outline-success">
-  <%= link_to t('view.end_date_sort'), tasks_path(sort_end_date: "true") %> | 
-  <%= link_to t('view.priority_sort'), tasks_path(sort_priority: "true") %> 
-</button>
-<br>
-<br>
-<h1><%= t('view.task_list') %></h1>
-<p style="color: #a4a8d4"><%= notice %></p>
+<h3><%= @user.name %>のタスク</h3>
 
 <table class="table">
   <tr>
@@ -21,9 +12,8 @@
     <th><%= t('view.end_date') %></th>
     <th><%= t('view.start_status') %>&emsp;</th>
     <th><%= t('view.priority') %>&emsp;</th>
-    
   </tr>
-  <% @tasks.each do |task| %>
+<% @tasks.each do |task| %>
   <tr class="task_row">
     <td><%= task.title %>&emsp;</td>
     <td><%= task.content %>&emsp;</td>
@@ -53,16 +43,9 @@
   </tr>
   <% end %>
 </table>
-<br>
 <button type="button" class="btn btn-outline-info">
   <%= link_to t('view.new_task'), new_task_path %>
 </button>
-<br>
 <button type="button" class="btn btn-outline-info">
   <%= link_to t('view.task_list'), tasks_path %>
 </button>
-<br>
-<button type="button" class="btn btn-outline-info">
-  <%= link_to '管理者画面', tasks_path(admin_user: "true") %> 
-</button>
-<%= paginate @tasks %>
