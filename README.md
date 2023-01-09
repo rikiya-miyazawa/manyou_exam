@@ -4,8 +4,9 @@
 | name:string     | task_id:references | title:string         |
 | email:string    | user_id:references | content:text         |
 | password:string |                    | end_date:date        |
-|                 |                    | start_status:integer |
+| admin:boolean   |                    | start_status:integer |
 |                 |                    | priority:integer     |
+|                 |                    | user_id:bigint
 <HR>
 
 ## Heroku deploy flow
