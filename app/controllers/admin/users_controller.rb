@@ -1,7 +1,8 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: %i(edit update show destroy)
+  before_action :admin_rights
   def index 
-    @users = User.select(:name, :id)
+    @users = User.all.includes(:tasks)
   end
   
   def new
@@ -46,4 +47,9 @@ class Admin::UsersController < ApplicationController
       @user = User.find(params[:id])
     end
 
+    def admin_rights
+      unless admin?
+        redirect_to tasks_path, notice: '管理者のみアクセスできます'
+      end
+    end
 end
