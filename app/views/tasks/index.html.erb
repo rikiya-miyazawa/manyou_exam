@@ -17,6 +17,7 @@
   <tr>
     <th><%= t('view.title') %></th>
     <th><%= t('view.content') %></th>
+    <th><%= t('view.label') %></th>
     <th><%= t('view.user') %></th>
     <th><%= t('view.end_date') %></th>
     <th><%= t('view.start_status') %>&emsp;</th>
@@ -27,6 +28,11 @@
   <tr class="task_row">
     <td><%= task.title %>&emsp;</td>
     <td><%= task.content %>&emsp;</td>
+    <td>
+      <% task.labels.each do |label| %>
+        <%= label.name %>
+      <% end %>&emsp;
+    </td>
     <td><%= task.user.name %>&emsp;</td>
     <td><%= task.end_date %>&emsp;</td>
     <td>

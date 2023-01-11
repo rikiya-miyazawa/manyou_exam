@@ -17,6 +17,7 @@ ja:
     priority_sort: '優先度で並び替え'
     undo: '元に戻す'
     search: '検索'
+    label: 'ラベル'
     confirm:
       delete: '本当に削除しますか？'
   enums:

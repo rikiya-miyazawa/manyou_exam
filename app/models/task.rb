@@ -4,6 +4,8 @@ class Task < ApplicationRecord
   validates :content, presence: true,
             length: { maximum: 1000 }
   belongs_to :user
+  has_many :labellings, dependent: :destroy
+  has_many :labels, through: :labellings
   scope :sort_end_date, -> {order(end_date: :desc)}
   scope :sort_priority, -> {order(priority: :desc)}
   scope :latest, -> {order(created_at: :desc)}
