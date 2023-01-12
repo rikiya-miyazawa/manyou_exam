@@ -1,6 +1,7 @@
 <%= form_with url: tasks_path, method: :get, scope: :task, local: true do |form| %>
     <%= form.text_field :title %>
     <%= form.select :start_status, Task.start_statuses.keys, include_blank: "ステータス選択"%>
+    <%= form.select :label_id,  Label.all.collect { |p| [ p.name, p.id ] }, include_blank: "ラベル選択"%>
     <%= form.submit t('view.search'), name: nil %>
 <% end %>
 <br>
