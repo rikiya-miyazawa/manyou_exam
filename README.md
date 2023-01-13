@@ -1,12 +1,12 @@
 ## table schema
-| User            | Label              | Task                 |
-| :---:           | :---:              | :---:                |
-| name:string     | task_id:references | title:string         |
-| email:string    | user_id:references | content:text         |
-| password:string |                    | end_date:date        |
-| admin:boolean   |                    | start_status:integer |
-|                 |                    | priority:integer     |
-|                 |                    | user_id:bigint
+| User            | Label              | Task                 | Labelling       |
+| :---:           | :---:              | :---:                | :---:           |
+| name:string     | name:string        | title:string         | task_id:bigint  |
+| email:string    |                    | content:text         | label_id:bigint |
+| password:string |                    | end_date:date        |                 |
+| admin:boolean   |                    | start_status:integer |                 |
+|                 |                    | priority:integer     |                 |
+|                 |                    | user_id:bigint       |                 |
 <HR>
 
 ## Heroku deploy flow
